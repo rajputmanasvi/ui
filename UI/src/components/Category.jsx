@@ -119,9 +119,13 @@ const CategoriesPage = () => {
         {/* Table */}
         <div className="p-4 overflow-x-auto">
           <table className="w-full border-collapse text-sm">
-            <thead className="bg-gray-100">
+            <thead style={{
+    backgroundColor: "rgb(211, 214, 220)",
+    borderColor: "#e0e0e0",
+  }}>
+
               <tr>
-                <th className="border border-gray-300 px-3 py-2 text-left">
+                <th className="border border-gray-300 px-3 py-2 text-left bg-#fff">
                   <input
                     type="checkbox"
                     checked={selectAll}
@@ -163,7 +167,7 @@ const CategoriesPage = () => {
                   </td>
                   <td className="border border-gray-300 px-3 py-2 text-center">
                     {editingId === c.id ? (
-                      <div className="flex justify-center gap-2 text-xs">
+                      <div className="flex justify-center gap-2 text-sm">
                         <button
                           onClick={() => handleUpdate(c.id)}
                           className="text-blue-600"
@@ -171,7 +175,7 @@ const CategoriesPage = () => {
                           Update
                         </button>
                         <span>|</span>
-                        <button onClick={handleCancel} className="text-gray-600">
+                        <button onClick={handleCancel} className="text-gray-600 text-xs">
                           Cancel
                         </button>
                       </div>
@@ -214,7 +218,7 @@ const CategoriesPage = () => {
             {/* ✅ Delete Button Row */}
             <tfoot>
               <tr>
-                <td colSpan="6" className="px-3 py-3 text-left border-b border-l">
+                <td colSpan="6" className="px-3 py-3 text-left border-b border-l border border-gray-300">
                   <button
                     onClick={handleDeleteSelected}
                     className="bg-red-600 text-white px-12 py-1.5 rounded-md hover:bg-red-700 text-sm"
@@ -272,7 +276,7 @@ const CategoriesPage = () => {
           placeholder="Category"
           value={newCategoryName}
           onChange={(e) => setNewCategoryName(e.target.value)}
-          className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sky-500 w-[50%]"
+          className="w-[70%] border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sky-500"
         />
       </div>
 
