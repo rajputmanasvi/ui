@@ -180,22 +180,22 @@ export default function LeadSource() {
                 </tr>
               ))}
           </tbody>
+          {/* ✅ Delete Button Row */}
+            <tfoot>
+              <tr>
+                <td colSpan="6" className="px-3 py-3 text-left border-t">
+                  <button
+                    onClick={handleDeleteSelected}
+                    className="bg-red-600 text-white px-12 py-1.5 rounded-md hover:bg-red-700 text-sm"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            </tfoot>
         </table>
 
-        {/* Delete Button */}
-        <div className="mt-6 mb-2">
-          <button
-            className={`px-5 py-2 rounded text-white ${
-              selectedIds.length === 0
-                ? "bg-red-600 cursor-not-allowed"
-                : "bg-red-600 hover:bg-red-700"
-            }`}
-            onClick={handleDeleteSelected}
-            disabled={selectedIds.length === 0}
-          >
-            Delete
-          </button>
-        </div>
+        
       </div>
 
       {/* ✅ MODAL POPUP WITH ANIMATION */}
