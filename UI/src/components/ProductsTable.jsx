@@ -117,29 +117,49 @@ const ProductsTable = () => {
           <table className="w-full text-sm border border-gray-200 border-collapse">
             <thead
               style={{
-                backgroundColor: "#e9edf1",
-                borderColor: "#f2f2f2",
+                backgroundColor: "rgb(211, 214, 220)",
+                borderColor: "rgb(211, 214, 220)", // ✅ same as background
               }}
             >
               <tr className="text-gray-700">
-                <th className="py-3 px-4 border text-center">
+                <th
+                  className="py-3 px-4 border text-center"
+                  style={{ borderColor: "rgb(211, 214, 220)" }}
+                >
                   <input
                     type="checkbox"
                     checked={selectAll}
                     onChange={handleSelectAll}
                   />
                 </th>
-                <th className="py-3 px-4 border text-left">SR. NO.</th>
-                <th className="py-3 px-4 border text-left font-semibold">
+                <th
+                  className="py-3 px-4 border text-left"
+                  style={{ borderColor: "rgb(211, 214, 220)" }}
+                >
+                  SR. NO.
+                </th>
+                <th
+                  className="py-3 px-4 border text-left font-semibold"
+                  style={{ borderColor: "rgb(211, 214, 220)" }}
+                >
                   PRODUCT NAME
                 </th>
-                <th className="py-3 px-3 border text-center font-semibold">
+                <th
+                  className="py-3 px-3 border text-center font-semibold"
+                  style={{ borderColor: "rgb(211, 214, 220)" }}
+                >
                   EDIT
                 </th>
-                <th className="py-3 px-6 border text-center font-semibold">
+                <th
+                  className="py-3 px-6 border text-center font-semibold"
+                  style={{ borderColor: "rgb(211, 214, 220)" }}
+                >
                   DELETE
                 </th>
-                <th className="py-3 px-1 border text-center font-semibold">
+                <th
+                  className="py-3 px-1 border text-center font-semibold"
+                  style={{ borderColor: "rgb(211, 214, 220)" }}
+                >
                   VIEW LEADS
                 </th>
               </tr>
