@@ -1,5 +1,5 @@
 import React  from 'react';
-import ProductsTable from './components/ProductsTable';
+import LeadStatus from './components/LeadStatus';
 //import ProductsTable from './components/ProductsTable';
 //import CategoriesPage from './components/Category';
 //import LeadSource from './components/LeadSource2';
@@ -7,7 +7,7 @@ import ProductsTable from './components/ProductsTable';
 function App() {
   return (
     <div className="App">
-        <ProductsTable/>
+        <LeadStatus/>
     </div>
   );
 }
