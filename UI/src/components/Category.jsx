@@ -94,7 +94,7 @@ const CategoriesPage = () => {
         </div>
 
         {/* Search */}
-        <div className="flex justify-end items-center p-4 bg-white border-b border-gray-200">
+        <div className="flex justify-end items-center p-4 bg-white ">
           <div className="flex items-center gap-2">
             <input
               type="text"
