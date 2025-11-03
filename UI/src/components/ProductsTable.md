@@ -106,17 +106,18 @@ const ProductsTable = () => {
           </div>
         </div>
 
-        {/* 🖥️ Table View */}
+        {/* 🖥️ Desktop Table */}
         <div className="p-4 overflow-x-auto hidden sm:block">
           <table className="w-full border-collapse text-sm">
             <thead
+              className="text-gray-800"
               style={{
-                backgroundColor: "rgb(211, 214, 220)",
-                borderColor: "#e0e0e0",
+                backgroundColor: "#e0e0e0",
+                border: "none",
               }}
             >
               <tr>
-                <th className="border px-3 py-2">
+                <th className="px-3 py-2 font-semibold text-left">
                   <input
                     type="checkbox"
                     checked={selectAll}
@@ -124,11 +125,11 @@ const ProductsTable = () => {
                     className="accent-blue-600"
                   />
                 </th>
-                <th className="border px-3 py-2 text-left">SR. NO.</th>
-                <th className="border px-3 py-2 text-left">PRODUCT NAME</th>
-                <th className="border px-3 py-2 text-center">EDIT</th>
-                <th className="border px-3 py-2 text-center">DELETE</th>
-                <th className="border px-3 py-2 text-center">VIEW LEADS</th>
+                <th className="px-3 py-2 text-left font-semibold">SR. NO.</th>
+                <th className="px-3 py-2 text-left font-semibold">PRODUCT NAME</th>
+                <th className="px-3 py-2 text-center font-semibold">EDIT</th>
+                <th className="px-3 py-2 text-center font-semibold">DELETE</th>
+                <th className="px-3 py-2 text-center font-semibold">VIEW LEADS</th>
               </tr>
             </thead>
 
@@ -165,10 +166,7 @@ const ProductsTable = () => {
                         >
                           Update
                         </button>
-                        <button
-                          onClick={handleCancel}
-                          className="text-gray-600"
-                        >
+                        <button onClick={handleCancel} className="text-gray-600">
                           Cancel
                         </button>
                       </div>
@@ -210,7 +208,7 @@ const ProductsTable = () => {
           </div>
         </div>
 
-        {/* 📱 Mobile View */}
+        {/* 📱 Mobile Cards */}
         <div className="block sm:hidden space-y-3 p-4">
           {filteredProducts.map((p, index) => (
             <div

@@ -80,9 +80,9 @@ const LeadStatus = () => {
 
   return (
     <div className="min-h-screen flex justify-center items-start mt-4 px-3 sm:px-6 py-4 bg-[#f4f5f7]">
-      <div className="bg-white rounded-md shadow-md w-full max-w-[1100px] border border-gray-300">
+      <div className="bg-white rounded-md shadow-md w-full max-w-[1100px]">
         {/* Header */}
-        <div className="flex justify-between items-center px-5 py-4 border-b border-gray-300 bg-white rounded-t-md shadow-sm">
+        <div className="flex justify-between items-center px-5 py-4 border-b border-gray-200 bg-white rounded-t-md shadow-sm">
           <h2 className="text-lg font-semibold text-gray-800">Lead Status</h2>
           <button
             onClick={() => setShowModal(true)}
@@ -110,15 +110,10 @@ const LeadStatus = () => {
 
         {/* 🖥️ Desktop Table */}
         <div className="p-4 overflow-x-auto hidden sm:block">
-          <table className="w-full border-collapse text-sm">
-            <thead
-              style={{
-                backgroundColor: "rgb(211, 214, 220)",
-                borderColor: "#e0e0e0",
-              }}
-            >
-              <tr>
-                <th className="border px-3 py-2">
+          <table className="w-full border border-gray-300 text-sm">
+            <thead style={{ backgroundColor: "rgb(211, 214, 220)" }}>
+              <tr className="text-gray-800 font-semibold text-center">
+                <th className="px-3 py-2 w-[50px]">
                   <input
                     type="checkbox"
                     checked={selectAll}
@@ -126,19 +121,21 @@ const LeadStatus = () => {
                     className="accent-blue-600"
                   />
                 </th>
-                <th className="border px-3 py-2 text-left">SR. NO.</th>
-                <th className="border px-3 py-2 text-left">LEAD STATUS</th>
-                <th className="border px-3 py-2 text-center">EDIT</th>
-                <th className="border px-3 py-2 text-center">DELETE</th>
-                <th className="border px-3 py-2 text-center">VIEW LEADS</th>
+                <th className="px-3 py-2">SR. NO.</th>
+                <th className="px-3 py-2 text-left">LEAD STATUS</th>
+                <th className="px-3 py-2">EDIT</th>
+                <th className="px-3 py-2">DELETE</th>
+                <th className="px-3 py-2">VIEW LEADS</th>
               </tr>
             </thead>
 
             <tbody>
               {filteredLeads.map((p, index) => (
-                <tr key={p.id} className="hover:bg-gray-50 text-center">
-                  {/* Checkbox Column */}
-                  <td className="border px-3 py-2">
+                <tr
+                  key={p.id}
+                  className="hover:bg-gray-50 border-t border-gray-300 text-center"
+                >
+                  <td className="border-r border-gray-300 py-2">
                     {index + 1 <= 3 ? (
                       <span className="text-gray-400">--</span>
                     ) : (
@@ -146,16 +143,16 @@ const LeadStatus = () => {
                         type="checkbox"
                         checked={selectedRows.includes(p.id)}
                         onChange={() => handleSelectRow(p.id)}
-                        className="accent-blue-600"
+                        className="accent-blue-600 cursor-pointer"
                       />
                     )}
                   </td>
 
-                  {/* SR. NO */}
-                  <td className="border px-3 py-2">{index + 1}</td>
+                  <td className="border-r border-gray-300 py-2 text-left px-3">
+                    {index + 1}
+                  </td>
 
-                  {/* LEAD STATUS */}
-                  <td className="border px-3 py-2 text-left">
+                  <td className="border-r border-gray-300 py-2 text-left px-3">
                     {editingId === p.id ? (
                       <input
                         type="text"
@@ -168,8 +165,7 @@ const LeadStatus = () => {
                     )}
                   </td>
 
-                  {/* Edit Column */}
-                  <td className="border px-3 py-2 text-center">
+                  <td className="border-r border-gray-300 py-2">
                     {index + 1 <= 3 ? (
                       <span className="text-gray-400">--</span>
                     ) : editingId === p.id ? (
@@ -197,8 +193,7 @@ const LeadStatus = () => {
                     )}
                   </td>
 
-                  {/* Delete Column */}
-                  <td className="border px-3 py-2 text-center">
+                  <td className="border-r border-gray-300 py-2">
                     {index + 1 <= 3 ? (
                       <span className="text-gray-400">--</span>
                     ) : (
@@ -211,8 +206,7 @@ const LeadStatus = () => {
                     )}
                   </td>
 
-                  {/* View Leads */}
-                  <td className="border px-3 py-2 text-center">
+                  <td className="py-2">
                     <button className="bg-[#dc3545] hover:bg-[#bb2d3b] text-white text-xs px-4 py-1 rounded">
                       View Leads
                     </button>
@@ -223,7 +217,7 @@ const LeadStatus = () => {
           </table>
 
           {/* Delete Button */}
-          <div className="flex justify-start px-5 py-3 border-t bg-white">
+          <div className="flex justify-start px-5 py-3 bg-white border-t border-gray-300">
             <button
               onClick={handleDeleteSelected}
               className="bg-red-600 text-white px-12 py-1.5 rounded-md hover:bg-red-700 text-sm"
@@ -238,7 +232,7 @@ const LeadStatus = () => {
           {filteredLeads.map((p, index) => (
             <div
               key={p.id}
-              className="bg-gray-50 border border-gray-300 rounded-lg p-4 shadow-sm"
+              className="bg-white rounded-lg p-4 shadow-sm border border-gray-300"
             >
               <div className="flex justify-between items-center mb-2">
                 <h3 className="font-semibold text-gray-800">
@@ -295,7 +289,7 @@ const LeadStatus = () => {
         </div>
       </div>
 
-      {/* Add Lead Status Modal */}
+      {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-start z-50">
           <div className="bg-white rounded-lg shadow-lg w-[90%] sm:w-[500px] mt-16 animate-[slideDown_0.4s_ease-out]">
