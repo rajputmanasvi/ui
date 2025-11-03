@@ -113,14 +113,9 @@ export default function LeadSource() {
         {/* 🖥️ Table View */}
         <div className="p-4 overflow-x-auto hidden sm:block">
           <table className="w-full border-collapse text-sm">
-            <thead
-              style={{
-                backgroundColor: "rgb(211, 214, 220)",
-                borderColor: "#e0e0e0",
-              }}
-            >
+            <thead style={{ backgroundColor: "rgb(211, 214, 220)" }}>
               <tr>
-                <th className="border px-3 py-2">
+                <th className="px-3 py-2">
                   <input
                     type="checkbox"
                     checked={selectAll}
@@ -128,17 +123,17 @@ export default function LeadSource() {
                     className="accent-blue-600"
                   />
                 </th>
-                <th className="border px-3 py-2 text-left">SR. NO.</th>
-                <th className="border px-3 py-2 text-left">LEAD SOURCE</th>
-                <th className="border px-3 py-2 text-center">EDIT</th>
-                <th className="border px-3 py-2 text-center">DELETE</th>
-                <th className="border px-3 py-2 text-center">VIEW LEADS</th>
+                <th className="px-3 py-2 text-left">SR. NO.</th>
+                <th className="px-3 py-2 text-left">LEAD SOURCE</th>
+                <th className="px-3 py-2 text-center">EDIT</th>
+                <th className="px-3 py-2 text-center">DELETE</th>
+                <th className="px-3 py-2 text-center">VIEW LEADS</th>
               </tr>
             </thead>
 
             <tbody>
               {filteredLeads.map((l, index) => (
-                <tr key={l.id} className="hover:bg-gray-50">
+                <tr key={l.id} className="hover:bg-gray-50 border-t border-gray-300">
                   <td className="border px-3 py-2">
                     <input
                       type="checkbox"
