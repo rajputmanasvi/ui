@@ -18,6 +18,7 @@ const CategoriesPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState("");
 
+  // ✅ Checkbox Handling
   const handleSelectAll = () => {
     const newSelectAll = !selectAll;
     setSelectAll(newSelectAll);
@@ -30,6 +31,7 @@ const CategoriesPage = () => {
     );
   };
 
+  // ✅ Edit + Update + Cancel
   const handleEdit = (id, name) => {
     setEditingId(id);
     setEditName(name);
@@ -58,10 +60,12 @@ const CategoriesPage = () => {
     setSelectAll(false);
   };
 
+  // ✅ Search Filter
   const filteredCategories = categories.filter((c) =>
     c.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  // ✅ Add Category
   const handleAddCategory = () => {
     if (newCategoryName.trim() === "")
       return alert("Please enter category name");
@@ -78,7 +82,7 @@ const CategoriesPage = () => {
   return (
     <div className="min-h-screen flex justify-center items-start mt-4 px-3 sm:px-6 py-4 bg-[#f4f5f7]">
       <div className="bg-white rounded-md shadow-md w-full max-w-[1100px] border border-gray-300">
-        {/* Header Section */}
+        {/* Header */}
         <div className="flex justify-between items-center px-5 py-4 border-b border-gray-300 bg-white rounded-t-md shadow-sm">
           <h2 className="text-lg font-semibold text-gray-800">Categories</h2>
           <button
@@ -89,8 +93,8 @@ const CategoriesPage = () => {
           </button>
         </div>
 
-    {/* Search */}
-        <div className="flex justify-end items-center p-4 bg-white border-b border-gray-200">
+        {/* Search */}
+        <div className="flex justify-end items-center p-4 bg-white ">
           <div className="flex items-center gap-2">
             <input
               type="text"
@@ -105,7 +109,7 @@ const CategoriesPage = () => {
           </div>
         </div>
 
-        {/* Table View (Desktop) */}
+        {/* 🖥️ Table View (Desktop) */}
         <div className="p-4 overflow-x-auto hidden sm:block">
           <table className="w-full border-collapse text-sm">
             <thead
@@ -115,7 +119,7 @@ const CategoriesPage = () => {
               }}
             >
               <tr>
-                <th className="border border-gray-300 px-3 py-2 text-left">
+                <th className="border px-3 py-2">
                   <input
                     type="checkbox"
                     checked={selectAll}
@@ -123,28 +127,18 @@ const CategoriesPage = () => {
                     className="accent-blue-600"
                   />
                 </th>
-                <th className="border border-gray-300 px-3 py-2 text-left">
-                  SR. NO.
-                </th>
-                <th className="border border-gray-300 px-3 py-2 text-left">
-                  CATEGORY NAME
-                </th>
-                <th className="border border-gray-300 px-3 py-2 text-center">
-                  EDIT
-                </th>
-                <th className="border border-gray-300 px-3 py-2 text-center">
-                  DELETE
-                </th>
-                <th className="border border-gray-300 px-3 py-2 text-center">
-                  VIEW LEADS
-                </th>
+                <th className="border px-3 py-2 text-left">SR. NO.</th>
+                <th className="border px-3 py-2 text-left">CATEGORY NAME</th>
+                <th className="border px-3 py-2 text-center">EDIT</th>
+                <th className="border px-3 py-2 text-center">DELETE</th>
+                <th className="border px-3 py-2 text-center">VIEW LEADS</th>
               </tr>
             </thead>
 
             <tbody>
               {filteredCategories.map((c, index) => (
                 <tr key={c.id} className="hover:bg-gray-50">
-                  <td className="border border-gray-300 px-3 py-2 text-left">
+                  <td className="border px-3 py-2">
                     <input
                       type="checkbox"
                       checked={selectedRows.includes(c.id)}
@@ -152,10 +146,8 @@ const CategoriesPage = () => {
                       className="accent-blue-600"
                     />
                   </td>
-                  <td className="border border-gray-300 px-3 py-2 text-left">
-                    {index + 1}
-                  </td>
-                  <td className="border border-gray-300 px-3 py-2">
+                  <td className="border px-3 py-2">{index + 1}</td>
+                  <td className="border px-3 py-2">
                     {editingId === c.id ? (
                       <input
                         type="text"
@@ -167,7 +159,7 @@ const CategoriesPage = () => {
                       c.name
                     )}
                   </td>
-                  <td className="border border-gray-300 px-3 py-2 text-center">
+                  <td className="border px-3 py-2 text-center">
                     {editingId === c.id ? (
                       <div className="flex justify-center gap-2 text-sm">
                         <button
@@ -176,10 +168,9 @@ const CategoriesPage = () => {
                         >
                           Update
                         </button>
-                        <span>|</span>
                         <button
                           onClick={handleCancel}
-                          className="text-gray-600 text-xs"
+                          className="text-gray-600"
                         >
                           Cancel
                         </button>
@@ -193,7 +184,7 @@ const CategoriesPage = () => {
                       </button>
                     )}
                   </td>
-                  <td className="border border-gray-300 px-3 py-2 text-center">
+                  <td className="border px-3 py-2 text-center">
                     <button
                       onClick={() => handleDelete(c.id)}
                       className="text-gray-700 hover:text-red-600"
@@ -201,29 +192,18 @@ const CategoriesPage = () => {
                       <FaTrash size={14} />
                     </button>
                   </td>
-                  <td className="border border-gray-300 px-3 py-2 text-center">
+                  <td className="border px-3 py-2 text-center">
                     <button className="bg-[#dc3545] hover:bg-[#bb2d3b] text-white text-xs px-4 py-1 rounded">
                       View Leads
                     </button>
                   </td>
                 </tr>
               ))}
-
-              {filteredCategories.length === 0 && (
-                <tr>
-                  <td
-                    colSpan="6"
-                    className="text-center py-3 text-gray-500 border border-gray-300"
-                  >
-                    No categories found.
-                  </td>
-                </tr>
-              )}
             </tbody>
           </table>
 
-          {/* Desktop Delete Button */}
-          <div className="flex justify-start px-5 py-3 border-t border-gray-200 bg-white">
+          {/* Delete Button */}
+          <div className="flex justify-start px-5 py-3 border-t bg-white">
             <button
               onClick={handleDeleteSelected}
               className="bg-red-600 text-white px-12 py-1.5 rounded-md hover:bg-red-700 text-sm"
@@ -233,47 +213,91 @@ const CategoriesPage = () => {
           </div>
         </div>
 
-        {/* Mobile View */}
+        {/* 📱 Mobile View */}
         <div className="block sm:hidden space-y-3 p-4">
           {filteredCategories.map((c, index) => (
             <div
               key={c.id}
               className="bg-gray-50 border border-gray-300 rounded-lg p-4 shadow-sm"
             >
-              <div className="flex justify-between items-center mb-2">
-                <h3 className="font-semibold text-gray-800">
-                  {index + 1}. {c.name}
-                </h3>
-                <input
-                  type="checkbox"
-                  checked={selectedRows.includes(c.id)}
-                  onChange={() => handleSelectRow(c.id)}
-                  className="accent-blue-600"
-                />
-              </div>
-              <div className="flex justify-between items-center mt-2">
-                <div className="flex gap-3">
-                  <button
-                    onClick={() => handleEdit(c.id, c.name)}
-                    className="text-gray-700 hover:text-blue-600"
-                  >
-                    <FaPen size={16} />
-                  </button>
-                  <button
-                    onClick={() => handleDelete(c.id)}
-                    className="text-gray-700 hover:text-red-600"
-                  >
-                    <FaTrash size={16} />
-                  </button>
-                </div>
-                <button className="bg-[#dc3545] hover:bg-[#bb2d3b] text-white text-xs px-3 py-1 rounded">
-                  View Leads
-                </button>
-              </div>
+              {editingId === c.id ? (
+                <>
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm font-medium text-gray-700">
+                      SR. NO: {index + 1}
+                    </span>
+                    <input
+                      type="checkbox"
+                      checked={selectedRows.includes(c.id)}
+                      onChange={() => handleSelectRow(c.id)}
+                      className="accent-blue-600"
+                    />
+                  </div>
+
+                  <input
+                    type="text"
+                    value={editName}
+                    onChange={(e) => setEditName(e.target.value)}
+                    className="border border-gray-300 rounded-md px-3 py-1 w-full mb-3 text-sm"
+                  />
+
+                  <div className="flex justify-between items-center">
+                    <div className="flex gap-3">
+                      <button
+                        onClick={() => handleUpdate(c.id)}
+                        className="text-green-600 font-semibold"
+                      >
+                        Update
+                      </button>
+                      <button
+                        onClick={handleCancel}
+                        className="text-red-600 font-semibold"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                    <button className="bg-[#dc3545] hover:bg-[#bb2d3b] text-white text-xs px-4 py-1 rounded">
+                      View Leads
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="flex justify-between items-center mb-2">
+                    <h3 className="font-semibold text-gray-800">
+                      {index + 1}. {c.name}
+                    </h3>
+                    <input
+                      type="checkbox"
+                      checked={selectedRows.includes(c.id)}
+                      onChange={() => handleSelectRow(c.id)}
+                      className="accent-blue-600"
+                    />
+                  </div>
+                  <div className="flex justify-between items-center mt-2">
+                    <div className="flex gap-3">
+                      <button
+                        onClick={() => handleEdit(c.id, c.name)}
+                        className="text-gray-700 hover:text-blue-600"
+                      >
+                        <FaPen size={16} />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(c.id)}
+                        className="text-gray-700 hover:text-red-600"
+                      >
+                        <FaTrash size={16} />
+                      </button>
+                    </div>
+                    <button className="bg-[#dc3545] hover:bg-[#bb2d3b] text-white text-xs px-3 py-1 rounded">
+                      View Leads
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
           ))}
 
-          {/* Mobile Delete Button */}
           <div className="flex justify-center mt-3">
             <button
               onClick={handleDeleteSelected}
@@ -285,10 +309,10 @@ const CategoriesPage = () => {
         </div>
       </div>
 
-      {/* Modal Popup */}
+      {/* Add Category Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
-          <div className="bg-white rounded-lg shadow-lg w-[90%] sm:w-[500px] animate-[slideDown_0.4s_ease-out]">
+        <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-start z-50">
+          <div className="bg-white rounded-lg shadow-lg w-[90%] sm:w-[500px] mt-16 animate-[slideDown_0.4s_ease-out]">
             <style>
               {`
                 @keyframes slideDown {
