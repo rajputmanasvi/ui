@@ -314,9 +314,9 @@ const ProductsTable = () => {
                 {/* ✅ Fixed-size View Leads Button */}
                 <div className="flex justify-left bg-white pt-4 pb-5 pl-2">
                   <button
-                    className="bg-[#dc3545] hover:bg-[#bb2d3b] text-white text-sm font-medium py-2.5 rounded-md shadow-sm transition-all"
+                    className="bg-[#dc3545] hover:bg-[#bb2d3b] text-white text-sm font-medium py-2 rounded-md shadow-sm transition-all"
                     style={{
-                      width: "150px", // ✅ fixed width
+                      width: "100px", // ✅ fixed width
                       letterSpacing: "0.3px",
                     }}
                   >
