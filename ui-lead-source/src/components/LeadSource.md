@@ -200,7 +200,7 @@ export default function LeadSource() {
           </table>
 
           {/* Delete Button */}
-          <div className="flex justify-start px-5 py-3 border-t bg-white">
+          <div className="flex justify-start px-5 py-3 border-t border-b border-l border-r bg-white">
             <button
               onClick={handleDeleteSelected}
               className="bg-red-600 text-white px-12 py-1.5 rounded-md hover:bg-red-700 text-sm"
@@ -260,7 +260,7 @@ export default function LeadSource() {
             <div className="flex justify-left mt-3 mb-3 px-3">
               <button
                 onClick={handleDeleteSelected}
-                className="bg-red-600 text-white w-[40%] py-2 rounded-md hover:bg-red-700 text-sm font-medium"
+                className="bg-red-600 text-white w-[25%] py-2 rounded-md hover:bg-red-700 text-sm font-medium"
               >
                 Delete
               </button>
