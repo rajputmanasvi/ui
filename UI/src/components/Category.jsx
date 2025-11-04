@@ -291,7 +291,7 @@ const CategoriesPage = () => {
                 className="bg-red-600 text-white px-8 py-1.5 rounded-md hover:bg-red-700 text-sm"
               >
                 Delete
-              </button>
+              </button> 
             </div>
           )}
         </div>
