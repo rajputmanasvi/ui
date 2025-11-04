@@ -338,8 +338,8 @@ const LeadStatus = () => {
           </div>
         </div>
       )}
-    </div> 
+    </div>
   );
-}; 
+};
 
 export default LeadStatus;
