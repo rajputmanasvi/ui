@@ -260,7 +260,7 @@ export default function LeadSource() {
             <div className="flex justify-left mt-3 mb-3 px-3">
               <button
                 onClick={handleDeleteSelected}
-                className="bg-red-600 text-white w-[40%] py-2 rounded-md hover:bg-red-700 text-sm font-medium"
+                className="bg-red-600 text-white w-[25%] py-2 rounded-md hover:bg-red-700 text-sm font-medium"
               >
                 Delete
               </button>
