@@ -1,298 +1,378 @@
 import React, { useState } from "react";
-import { FaTrash, FaPen } from "react-icons/fa";
+import { Pencil, Trash2 } from "lucide-react";
 
-const LeadStatus = () => {
-  const [selectAll, setSelectAll] = useState(false);
-  const [selectedRows, setSelectedRows] = useState([]);
-  const [leadStatuses, setLeadStatuses] = useState([
+export default function LeadStatusTable() {
+  const [statuses, setStatuses] = useState([
     { id: 1, name: "Closed" },
     { id: 2, name: "Open" },
     { id: 3, name: "Pending" },
     { id: 4, name: "Special" },
   ]);
-  const [editingId, setEditingId] = useState(null);
+
+  const [editId, setEditId] = useState(null);
   const [editName, setEditName] = useState("");
-  const [searchTerm, setSearchTerm] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const [newLeadStatus, setNewLeadStatus] = useState("");
+  const [newStatus, setNewStatus] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedIds, setSelectedIds] = useState([]);
 
-  // ✅ Checkbox Handling
-  const handleSelectAll = () => {
-    const newSelectAll = !selectAll;
-    setSelectAll(newSelectAll);
-    setSelectedRows(newSelectAll ? leadStatuses.map((p) => p.id) : []);
+  // ✅ Delete a status
+  const handleDelete = (id) => {
+    setStatuses(statuses.filter((s) => s.id !== id));
   };
 
-  const handleSelectRow = (id) => {
-    setSelectedRows((prev) =>
-      prev.includes(id) ? prev.filter((r) => r !== id) : [...prev, id]
-    );
-  };
-
-  // ✅ Edit, Update, Cancel
+  // ✅ Edit a status
   const handleEdit = (id, name) => {
-    setEditingId(id);
+    setEditId(id);
     setEditName(name);
   };
 
   const handleUpdate = (id) => {
-    setLeadStatuses((prev) =>
-      prev.map((p) => (p.id === id ? { ...p, name: editName } : p))
+    setStatuses(
+      statuses.map((s) => (s.id === id ? { ...s, name: editName } : s))
     );
-    setEditingId(null);
+    setEditId(null);
     setEditName("");
   };
 
   const handleCancel = () => {
-    setEditingId(null);
+    setEditId(null);
     setEditName("");
   };
 
-  // ✅ Delete
-  const handleDelete = (id) => {
-    setLeadStatuses((prev) => prev.filter((p) => p.id !== id));
-  };
-
-  const handleDeleteSelected = () => {
-    setLeadStatuses((prev) => prev.filter((p) => !selectedRows.includes(p.id)));
-    setSelectedRows([]);
-    setSelectAll(false);
-  };
-
-  // ✅ Search
-  const filteredLeads = leadStatuses.filter((p) =>
-    p.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  // ✅ Add Lead Status
-  const handleAddLeadStatus = () => {
-    if (newLeadStatus.trim() === "") return alert("Enter lead status");
-    const newItem = {
-      id: leadStatuses.length
-        ? Math.max(...leadStatuses.map((p) => p.id)) + 1
-        : 1,
-      name: newLeadStatus,
-    };
-    setLeadStatuses([...leadStatuses, newItem]);
-    setNewLeadStatus("");
+  // ✅ Add new status
+  const handleAdd = () => {
+    if (!newStatus.trim()) return;
+    const newId = statuses.length ? Math.max(...statuses.map((s) => s.id)) + 1 : 1;
+    setStatuses([...statuses, { id: newId, name: newStatus }]);
+    setNewStatus("");
     setShowModal(false);
   };
 
+  // ✅ Search filter
+  const filteredStatuses = statuses.filter((s) =>
+    s.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  // ✅ Select all
+  const handleSelectAll = () => {
+    if (selectedIds.length === filteredStatuses.length) {
+      setSelectedIds([]);
+    } else {
+      setSelectedIds(filteredStatuses.map((s) => s.id));
+    }
+  };
+
+  // ✅ Select individual
+  const handleSelect = (id) => {
+    if (selectedIds.includes(id)) {
+      setSelectedIds(selectedIds.filter((sid) => sid !== id));
+    } else {
+      setSelectedIds([...selectedIds, id]);
+    }
+  };
+
+  // ✅ Delete selected
+  const handleDeleteSelected = () => {
+    setStatuses(statuses.filter((s) => !selectedIds.includes(s.id)));
+    setSelectedIds([]);
+  };
+
   return (
-    <div className="min-h-screen flex justify-center items-start mt-4 px-3 sm:px-6 py-4 bg-[#f4f5f7]">
-      <div className="bg-white rounded-md shadow-md w-full max-w-[1100px]">
-        {/* Header */}
-        <div className="flex justify-between items-center px-5 py-4 border-b border-gray-200 bg-white rounded-t-md shadow-sm">
-          <h2 className="text-lg font-semibold text-gray-800">Lead Status</h2>
-          <button
-            onClick={() => setShowModal(true)}
-            className="bg-[#0d223f] hover:bg-[#112d57] text-white text-sm sm:text-base font-medium px-5 py-2 rounded-md transition-all shadow-sm"
-          >
-            Add Lead Status
-          </button>
-        </div>
+    <div className="w-[95%] md:w-[85%] max-w-[1600px] mx-auto bg-white rounded-md mt-10 border border-gray-200 shadow">
+      {/* Header */}
+      <div className="flex justify-between items-center px-6 py-3 border-b bg-gray-50">
+        <h2 className="text-lg font-semibold text-gray-700">Lead Status</h2>
+        <button
+          onClick={() => setShowModal(true)}
+          className="bg-blue-900 hover:bg-blue-800 text-white px-4 py-2 rounded text-sm"
+        >
+          Add Lead Status
+        </button>
+      </div>
 
-        {/* Search */}
-        <div className="flex justify-end items-center p-4 bg-white">
-          <div className="flex items-center gap-2">
-            <input
-              type="text"
-              placeholder="Lead Status"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="border border-gray-300 rounded-md px-2 py-2 w-[180px] focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-            <button className="bg-sky-500 hover:bg-sky-600 text-white px-4 py-2 rounded-md transition duration-200">
-              Search
-            </button>
-          </div>
-        </div>
+      {/* Search Bar */}
+      <div className="flex justify-end items-center px-6 py-3 bg-white gap-3">
+        <input
+          type="text"
+          placeholder="Lead Status"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="border border-gray-300 rounded-md px-2 py-2 w-40 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <button
+          onClick={() => setSearchQuery("")}
+          className="bg-sky-500 hover:bg-sky-600 text-white px-6 py-2 rounded-md text-sm font-medium"
+        >
+          Search
+        </button>
+      </div>
 
-        {/* 🖥️ Desktop Table */}
-        <div className="p-4 overflow-x-auto hidden sm:block">
-          <table className="w-full border border-gray-300 text-sm">
-            <thead style={{ backgroundColor: "rgb(211, 214, 220)" }}>
-              <tr className="text-gray-800 font-semibold text-center">
-                <th className="px-3 py-2 w-[50px]">
-                  <input
-                    type="checkbox"
-                    checked={selectAll}
-                    onChange={handleSelectAll}
-                    className="accent-blue-600"
-                  />
-                </th>
-                <th className="px-3 py-2">SR. NO.</th>
-                <th className="px-3 py-2 text-left">LEAD STATUS</th>
-                <th className="px-3 py-2">EDIT</th>
-                <th className="px-3 py-2">DELETE</th>
-                <th className="px-3 py-2">VIEW LEADS</th>
-              </tr>
-            </thead>
+      {/* TABLE VIEW */}
+      <div className="hidden md:block px-6 py-6 overflow-x-auto">
+        <table className="w-full border border-gray-100 text-sm">
+          <thead className="bg-gray-100 text-gray-800">
+            <tr>
+              <th className="px-3 py-2 text-left w-[10%]">
+                <input
+                  type="checkbox"
+                  className="w-4 h-4"
+                  checked={
+                    selectedIds.length === filteredStatuses.length &&
+                    filteredStatuses.length > 0
+                  }
+                  onChange={handleSelectAll}
+                />
+              </th>
+              <th className="px-3 py-2 text-left font-semibold">SR. NO.</th>
+              <th className="px-3 py-2 text-left font-semibold">LEAD STATUS</th>
+              <th className="px-3 py-2 text-center font-semibold">EDIT</th>
+              <th className="px-3 py-2 text-center font-semibold">DELETE</th>
+              <th className="px-3 py-2 text-center font-semibold">VIEW LEAD</th>
+            </tr>
+          </thead>
 
-            <tbody>
-              {filteredLeads.map((p, index) => (
-                <tr
-                  key={p.id}
-                  className="hover:bg-gray-50 border-t border-gray-300 text-center"
-                >
-                  <td className="border-r border-gray-300 py-2">
-                    {index + 1 <= 3 ? (
-                      <span className="text-gray-400">--</span>
-                    ) : (
+          <tbody>
+            {filteredStatuses.length > 0 ? (
+              filteredStatuses.map((s, index) => (
+                <tr key={s.id} className="hover:bg-gray-50">
+                  {/* ✅ Checkbox column */}
+                  <td className="px-3 py-2 border text-left">
+                    {s.name === "Special" ? (
                       <input
                         type="checkbox"
-                        checked={selectedRows.includes(p.id)}
-                        onChange={() => handleSelectRow(p.id)}
-                        className="accent-blue-600 cursor-pointer"
+                        className="w-4 h-4"
+                        checked={selectedIds.includes(s.id)}
+                        onChange={() => handleSelect(s.id)}
                       />
+                    ) : (
+                      <span className="text-gray-500">--</span>
                     )}
                   </td>
 
-                  <td className="border-r border-gray-300 py-2 text-left px-3">
+                  <td className="px-3 py-2 border text-left text-gray-700">
                     {index + 1}
                   </td>
 
-                  <td className="border-r border-gray-300 py-2 text-left px-3">
-                    {editingId === p.id ? (
+                  <td className="px-2 py-2 border text-gray-700 text-left">
+                    {editId === s.id ? (
                       <input
                         type="text"
                         value={editName}
                         onChange={(e) => setEditName(e.target.value)}
-                        className="border border-gray-300 rounded-md px-2 py-1 text-sm w-[70%]"
+                        className="border px-2 py-1 rounded w-[70%]"
                       />
                     ) : (
-                      p.name
+                      s.name
                     )}
                   </td>
 
-                  <td className="border-r border-gray-300 py-2">
-                    {index + 1 <= 3 ? (
-                      <span className="text-gray-400">--</span>
-                    ) : editingId === p.id ? (
-                      <div className="flex justify-center gap-2 text-sm">
+                  {/* ✅ EDIT column */}
+                  <td className="px-3 py-2 border text-center">
+                    {editId === s.id ? (
+                      <div className="flex justify-center gap-2">
                         <button
-                          onClick={() => handleUpdate(p.id)}
-                          className="text-blue-600"
+                          onClick={() => handleUpdate(s.id)}
+                          className="text-blue-600 font-medium"
                         >
                           Update
                         </button>
+                        <span>|</span>
                         <button
                           onClick={handleCancel}
-                          className="text-gray-600"
+                          className="text-gray-600 font-medium"
                         >
                           Cancel
                         </button>
                       </div>
-                    ) : (
+                    ) : s.name === "Special" ? (
                       <button
-                        onClick={() => handleEdit(p.id, p.name)}
-                        className="text-gray-700 hover:text-blue-600"
+                        onClick={() => handleEdit(s.id, s.name)}
+                        className="text-gray-600 hover:text-blue-600"
                       >
-                        <FaPen size={14} />
+                        <Pencil size={16} />
                       </button>
+                    ) : (
+                      <span className="text-gray-500">--</span>
                     )}
                   </td>
 
-                  <td className="border-r border-gray-300 py-2">
-                    {index + 1 <= 3 ? (
-                      <span className="text-gray-400">--</span>
-                    ) : (
+                  {/* ✅ DELETE column */}
+                  <td className="px-3 py-2 border text-center">
+                    {s.name === "Special" ? (
                       <button
-                        onClick={() => handleDelete(p.id)}
-                        className="text-gray-700 hover:text-red-600"
+                        onClick={() => handleDelete(s.id)}
+                        className="text-gray-600 hover:text-red-600"
                       >
-                        <FaTrash size={14} />
+                        <Trash2 size={16} />
                       </button>
+                    ) : (
+                      <span className="text-gray-500">--</span>
                     )}
                   </td>
 
-                  <td className="py-2">
-                    <button className="bg-[#dc3545] hover:bg-[#bb2d3b] text-white text-xs px-4 py-1 rounded">
+                  <td className="px-3 py-2 border text-center">
+                    <button className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
                       View Leads
                     </button>
                   </td>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="6" className="text-center py-4 text-gray-500 border">
+                  No results found.
+                </td>
+              </tr>
+            )}
+          </tbody>
+           {/* Bottom Delete Button */}
+        <div className="flex justify-start mt-4 pb-2 pl-2 ">
+          <button
+            onClick={handleDeleteSelected}
+            disabled={selectedIds.length === 0}
+            className={`px-6 py-2 rounded ${
+              selectedIds.length === 0
+                ? "bg-red-600 text-gray-200"
+                : "bg-red-600 hover:bg-red-700 text-white"
+            }`}
+          >
+            Delete
+          </button>
+        </div>
+      
+        </table>
+</div>
+       
 
-          {/* Delete Button */}
-          <div className="flex justify-start px-5 py-3 bg-white border-t border-gray-300">
-            <button
-              onClick={handleDeleteSelected}
-              className="bg-red-600 text-white px-12 py-1.5 rounded-md hover:bg-red-700 text-sm"
-            >
-              Delete
-            </button>
-          </div>
+      {/* ✅ MOBILE CARD VIEW */}
+      <div className="block md:hidden px-4 py-6">
+        <div className="bg-gray-100 border border-gray-300 rounded-md mb-5 p-3 text-left">
+          <p className="font-semibold text-gray-700 text-sm mb-1">SELECT ALL</p>
+          <input
+            type="checkbox"
+            className="w-4 h-4 mb-2"
+            checked={
+              selectedIds.length === filteredStatuses.length &&
+              filteredStatuses.length > 0
+            }
+            onChange={handleSelectAll}
+          />
+          <p className="font-semibold text-gray-700 text-sm mt-2">VIEW LEAD</p>
         </div>
 
-        {/* 📱 Mobile Cards */}
-        <div className="block sm:hidden space-y-3 p-4">
-          {filteredLeads.map((p, index) => (
+        {filteredStatuses.length > 0 ? (
+          filteredStatuses.map((s, index) => (
             <div
-              key={p.id}
-              className="bg-white rounded-lg p-4 shadow-sm border border-gray-300"
+              key={s.id}
+              className="border border-gray-300 rounded-md bg-white mb-5 overflow-hidden"
             >
-              <div className="flex justify-between items-center mb-2">
-                <h3 className="font-semibold text-gray-800">
-                  {index + 1}. {p.name}
-                </h3>
-                {index + 1 <= 3 ? (
-                  <span className="text-gray-400 text-sm">--</span>
-                ) : (
-                  <input
-                    type="checkbox"
-                    checked={selectedRows.includes(p.id)}
-                    onChange={() => handleSelectRow(p.id)}
-                    className="accent-blue-600"
-                  />
-                )}
+              {/* SR NO */}
+              <div className="px-4 py-2 border-b border-gray-200">
+                <p className="text-gray-800 text-sm font-semibold text-left">
+                  SR NO : <span className="font-normal text-gray-700">{index + 1}</span>
+                </p>
               </div>
 
-              <div className="flex justify-between items-center mt-2">
-                <div className="flex gap-3">
-                  {index + 1 <= 3 ? (
-                    <span className="text-gray-400 text-sm">--</span>
+              {/* LEAD STATUS */}
+              <div className="px-4 py-2 border-b border-gray-200">
+                <p className="text-gray-800 text-sm font-semibold text-left">
+                  Lead Status :{" "}
+                  {editId === s.id ? (
+                    <input
+                      type="text"
+                      value={editName}
+                      onChange={(e) => setEditName(e.target.value)}
+                      className="border border-gray-300 rounded px-2 py-1 text-gray-700 w-28 text-sm ml-1"
+                    />
                   ) : (
-                    <>
-                      <button
-                        onClick={() => handleEdit(p.id, p.name)}
-                        className="text-gray-700 hover:text-blue-600"
-                      >
-                        <FaPen size={16} />
-                      </button>
-                      <button
-                        onClick={() => handleDelete(p.id)}
-                        className="text-gray-700 hover:text-red-600"
-                      >
-                        <FaTrash size={16} />
-                      </button>
-                    </>
+                    <span className="font-normal text-gray-700">{s.name}</span>
                   )}
-                </div>
-                <button className="bg-[#dc3545] hover:bg-[#bb2d3b] text-white text-xs px-3 py-1 rounded">
+                </p>
+              </div>
+
+              {/* EDIT */}
+              <div className="px-4 py-2 border-b border-gray-200">
+                <p className="text-gray-800 text-sm font-semibold flex items-center gap-2">
+                  Edit :
+                  {editId === s.id ? (
+                    <span className="ml-2 flex gap-3">
+                      <button
+                        onClick={() => handleUpdate(s.id)}
+                        className="text-blue-600 font-medium text-sm"
+                      >
+                        Update
+                      </button>
+                      <span>|</span>
+                      <button
+                        onClick={handleCancel}
+                        className="text-gray-600 font-medium text-sm"
+                      >
+                        Cancel
+                      </button>
+                    </span>
+                  ) : s.name === "Special" ? (
+                    <button
+                      onClick={() => handleEdit(s.id, s.name)}
+                      className="text-gray-600 hover:text-blue-600 ml-2"
+                    >
+                      <Pencil size={16} />
+                    </button>
+                  ) : (
+                    <span className="text-gray-500 ml-2">--</span>
+                  )}
+                </p>
+              </div>
+
+              {/* DELETE */}
+              <div className="px-4 py-2 border-b border-gray-200">
+                <p className="text-gray-800 text-sm font-semibold flex items-center gap-2">
+                  Delete :
+                  {s.name === "Special" ? (
+                    <button
+                      onClick={() => handleDelete(s.id)}
+                      className="text-gray-600 hover:text-red-600 ml-2"
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  ) : (
+                    <span className="text-gray-500 ml-2">--</span>
+                  )}
+                </p>
+              </div>
+
+              {/* VIEW LEADS */}
+              <div className="flex justify-start px-4 py-3 bg-white">
+                <button className="bg-red-500 hover:bg-red-600 text-white px-5 py-1.5 rounded text-sm">
                   View Leads
                 </button>
               </div>
             </div>
-          ))}
+          ))
+        ) : (
+          <p className="text-center text-gray-500">No results found.</p>
+        )}
 
-          <div className="flex justify-center mt-3">
-            <button
-              onClick={handleDeleteSelected}
-              className="bg-red-600 text-white w-full py-2 rounded-md hover:bg-red-700 text-sm font-medium"
-            >
-              Delete
-            </button>
-          </div>
+        {/* Bottom Delete Button */}
+        <div className="flex justify-start mt-4">
+          <button
+            onClick={handleDeleteSelected}
+            disabled={selectedIds.length === 0}
+            className={`px-6 py-2 rounded ${
+              selectedIds.length === 0
+                ? "bg-red-600 text-gray-200"
+                : "bg-red-600 hover:bg-red-700 text-white"
+            }`}
+          >
+            Delete
+          </button>
         </div>
       </div>
 
-      {/* Modal */}
+      {/* Add Lead Status Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-start z-50">
-          <div className="bg-white rounded-lg shadow-lg w-[90%] sm:w-[500px] mt-16 animate-[slideDown_0.4s_ease-out]">
+          <div className="bg-white rounded-lg shadow-lg w-[90%] sm:w-[500px] mt-4 animate-[slideDown_0.4s_ease-out]">
             <style>
               {`
                 @keyframes slideDown {
@@ -308,22 +388,22 @@ const LeadStatus = () => {
               </h3>
             </div>
 
-            <div className="p-5 bg-[#f0f2f5]">
+            <div className="p-5 bg-[#f0f2f5] text-left">
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Lead Status
               </label>
               <input
                 type="text"
-                placeholder="Lead Status"
-                value={newLeadStatus}
-                onChange={(e) => setNewLeadStatus(e.target.value)}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-sky-500"
+                placeholder="Enter Lead Status"
+                value={newStatus}
+                onChange={(e) => setNewStatus(e.target.value)}
+                className="border border-gray-300 rounded-md px-3 py-2 text-sm w-full max-w-[250px] focus:outline-none focus:ring-1 focus:ring-sky-500"
               />
             </div>
 
             <div className="flex justify-end gap-3 px-5 pb-4 mt-3">
               <button
-                onClick={handleAddLeadStatus}
+                onClick={handleAdd}
                 className="bg-sky-600 hover:bg-sky-700 text-white text-sm font-medium px-5 py-2 rounded-md"
               >
                 Save
@@ -340,6 +420,4 @@ const LeadStatus = () => {
       )}
     </div>
   );
-};
-
-export default LeadStatus;
+}

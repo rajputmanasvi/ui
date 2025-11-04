@@ -6,7 +6,7 @@ const LeadStatus = () => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [leadStatuses, setLeadStatuses] = useState([
     { id: 1, name: "Closed" },
-    { id: 2, name: "Open" },
+    { id: 2, name: "Open" }, 
     { id: 3, name: "Pending" },
     { id: 4, name: "Special" },
   ]);
