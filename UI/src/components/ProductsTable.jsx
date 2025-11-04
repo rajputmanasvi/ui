@@ -192,7 +192,7 @@ const ProductsTable = () => {
                     </button>
                   </td>
                   <td className="border px-3 py-2 text-center">
-                    <button className="bg-[#dc3545] hover:bg-[#bb2d3b] text-white text-xs px-3 py-0 rounded">
+                    <button className="bg-[#dc3545] hover:bg-[#bb2d3b] text-white text-xs px-4 py-1 rounded">
                       View Leads
                     </button>
                   </td>
@@ -201,7 +201,7 @@ const ProductsTable = () => {
 
               {/* ✅ Delete Selected Row (inside table) */}
               {products.length > 0 && (
-                <tr>
+                <tr className="border-t border-l border-b border-r">
                   <td colSpan="6" className="text-left border-t px-4 py-3 bg-white">
                     <button
                       onClick={handleDeleteSelected}
@@ -314,9 +314,9 @@ const ProductsTable = () => {
                 {/* ✅ Fixed-size View Leads Button */}
                 <div className="flex justify-left bg-white pt-4 pb-5 pl-2">
                   <button
-                    className="bg-[#dc3545] hover:bg-[#bb2d3b] text-white text-sm font-medium py-2.5 rounded-md shadow-sm transition-all"
+                    className="bg-[#dc3545] hover:bg-[#bb2d3b] text-white text-sm font-medium py-2 rounded-md shadow-sm transition-all"
                     style={{
-                      width: "150px", // ✅ fixed width
+                      width: "100px", // ✅ fixed width
                       letterSpacing: "0.3px",
                     }}
                   >
