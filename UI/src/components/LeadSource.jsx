@@ -232,7 +232,7 @@ const LeadSource = () => {
               )}
 
               <tr>
-                <td colSpan="6" className="px-3 py-3 text-left border-t">
+                <td colSpan="6" className="px-3 py-3 text-left border-t border-b border-l border-r">
                   <button
                     onClick={handleDeleteSelected}
                     className="bg-red-600 text-white px-12 py-1.5 rounded-md hover:bg-red-700 text-sm"
